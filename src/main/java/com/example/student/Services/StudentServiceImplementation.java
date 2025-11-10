@@ -76,4 +76,11 @@ public class StudentServiceImplementation implements StudentService {
     public long count() {
         return studentRepository.count();
     }
+    
+    @Override
+    public List<StudentDto> getStudentByMajor(String major) {
+        List<Student> students = studentRepository.findStudentByMajor(major.trim().replaceAll("\\s+", " "));
+        return students.stream().map(student -> modelMapper.map(student, StudentDto.class))
+                .collect(Collectors.toList());
+    }
 }

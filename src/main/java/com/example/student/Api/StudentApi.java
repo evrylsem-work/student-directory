@@ -3,6 +3,7 @@ package com.example.student.Api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties.Http;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.student.Dto.StudentDto;
@@ -85,5 +87,10 @@ public class StudentApi {
     @GetMapping("/test")
     public String test() {
         return "✅ Controller is LIVE!";
+    }
+    
+    @GetMapping("/search")
+    public ResponseEntity<List<StudentDto>> searchStudentByMajor(@RequestParam("major") String major) {
+        return new ResponseEntity<List<StudentDto>>(studentService.getStudentByMajor(major), HttpStatus.OK);
     }
 }
